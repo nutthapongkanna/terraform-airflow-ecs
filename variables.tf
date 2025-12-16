@@ -10,7 +10,12 @@ variable "project_name" {
 
 variable "airflow_version" {
   type    = string
-  default = "3.1.5"
+  default = "3.0.2"
+}
+
+variable "allowed_http_cidrs" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
 }
 
 variable "admin_username" {
@@ -23,33 +28,16 @@ variable "admin_email" {
   default = "admin@example.com"
 }
 
-variable "password_length" {
-  type    = number
-  default = 24
+variable "postgres_instance_class" {
+  type    = string
+  default = "db.t4g.micro"
 }
 
-variable "allowed_http_cidrs" {
-  type    = list(string)
-  default = ["0.0.0.0/0"]
+variable "redis_node_type" {
+  type    = string
+  default = "cache.t4g.micro"
 }
 
-# Worker autoscaling
-variable "worker_min" {
-  type    = number
-  default = 1
-}
-
-variable "worker_max" {
-  type    = number
-  default = 5
-}
-
-variable "worker_cpu_target" {
-  type    = number
-  default = 60
-}
-
-# Fargate sizes
 variable "api_cpu" {
   type    = number
   default = 512
@@ -100,13 +88,17 @@ variable "worker_mem" {
   default = 2048
 }
 
-# RDS/Redis sizes (lab)
-variable "postgres_instance_class" {
-  type    = string
-  default = "db.t3.micro"
+variable "worker_min" {
+  type    = number
+  default = 2
 }
 
-variable "redis_node_type" {
-  type    = string
-  default = "cache.t3.micro"
+variable "worker_max" {
+  type    = number
+  default = 4
+}
+
+variable "worker_cpu_target" {
+  type    = number
+  default = 60
 }
